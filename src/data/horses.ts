@@ -1,12 +1,10 @@
 export type HorseRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' | 'mythic' | 'celestial';
-
 export type Horse = {
   id: string;
   name: string;
   image: string;
   rarity: HorseRarity;
 };
-
 export const RARITY_WEIGHTS: Record<HorseRarity, number> = {
   common: 36,
   uncommon: 24,
@@ -27,83 +25,108 @@ export const RARITY_LABELS: Record<HorseRarity, string> = {
   celestial: '천상',
 };
 
-const IMAGE_KEYS = [
-  'red',
-  'blue',
-  'giant',
-  'mini',
-  'gold',
-  'silver',
-  'night',
-  'dawn',
-  'flame',
-  'ice',
-  'forest',
-  'thunder',
-  'cloud',
-  'rock',
-  'ghost',
-  'robot',
-  'rainbow',
-  'choco',
-  'mint',
-  'star',
-] as const;
-
-const BASE_HORSES: Horse[] = [
+export const HORSES: Horse[] = [
+  { id: 'star', name: '별말', image: 'horses/horse-star.png', rarity: 'celestial' },
+  { id: 'rainbow', name: '무지개말', image: 'horses/horse-rainbow.png', rarity: 'mythic' },
+  { id: 'aurora', name: '오로라말', image: 'horses/horse-dawn.png', rarity: 'mythic' },
+  { id: 'eclipse', name: '일식말', image: 'horses/horse-night.png', rarity: 'mythic' },
+  { id: 'comet', name: '혜성말', image: 'horses/horse-star.png', rarity: 'mythic' },
+  { id: 'gold', name: '황금말', image: 'horses/horse-gold.png', rarity: 'legendary' },
+  { id: 'thunder', name: '번개말', image: 'horses/horse-thunder.png', rarity: 'legendary' },
+  { id: 'phoenix', name: '불사조말', image: 'horses/horse-flame.png', rarity: 'legendary' },
+  { id: 'dragonfire', name: '용염말', image: 'horses/horse-flame.png', rarity: 'legendary' },
+  { id: 'sunflare', name: '태양말', image: 'horses/horse-gold.png', rarity: 'legendary' },
+  { id: 'moonblade', name: '월광말', image: 'horses/horse-night.png', rarity: 'legendary' },
+  { id: 'stormlord', name: '폭풍말', image: 'horses/horse-thunder.png', rarity: 'legendary' },
+  { id: 'robot', name: '로봇말', image: 'horses/horse-robot.png', rarity: 'epic' },
+  { id: 'ghost', name: '유령말', image: 'horses/horse-ghost.png', rarity: 'epic' },
+  { id: 'flame', name: '불꽃말', image: 'horses/horse-flame.png', rarity: 'epic' },
+  { id: 'neon', name: '네온말', image: 'horses/horse-mint.png', rarity: 'epic' },
+  { id: 'crystal', name: '수정말', image: 'horses/horse-ice.png', rarity: 'epic' },
+  { id: 'mecha', name: '메카말', image: 'horses/horse-robot.png', rarity: 'epic' },
+  { id: 'shadow', name: '그림자말', image: 'horses/horse-night.png', rarity: 'epic' },
+  { id: 'lava', name: '용암말', image: 'horses/horse-flame.png', rarity: 'epic' },
+  { id: 'frostfang', name: '빙아말', image: 'horses/horse-ice.png', rarity: 'epic' },
+  { id: 'arcane', name: '비전말', image: 'horses/horse-ghost.png', rarity: 'epic' },
+  { id: 'venom', name: '독무말', image: 'horses/horse-rock.png', rarity: 'epic' },
+  { id: 'night', name: '밤하늘말', image: 'horses/horse-night.png', rarity: 'rare' },
+  { id: 'ice', name: '얼음말', image: 'horses/horse-ice.png', rarity: 'rare' },
+  { id: 'rock', name: '바위말', image: 'horses/horse-rock.png', rarity: 'rare' },
+  { id: 'cloud', name: '구름말', image: 'horses/horse-cloud.png', rarity: 'rare' },
+  { id: 'sand', name: '모래말', image: 'horses/horse-choco.png', rarity: 'rare' },
+  { id: 'coral', name: '산호말', image: 'horses/horse-dawn.png', rarity: 'rare' },
+  { id: 'mist', name: '안개말', image: 'horses/horse-cloud.png', rarity: 'rare' },
+  { id: 'breeze', name: '바람말', image: 'horses/horse-cloud.png', rarity: 'rare' },
+  { id: 'snow', name: '눈말', image: 'horses/horse-ice.png', rarity: 'rare' },
+  { id: 'marble', name: '대리석말', image: 'horses/horse-silver.png', rarity: 'rare' },
+  { id: 'ember', name: '잿불말', image: 'horses/horse-flame.png', rarity: 'rare' },
+  { id: 'cobalt', name: '코발트말', image: 'horses/horse-blue.png', rarity: 'rare' },
+  { id: 'jade', name: '옥말', image: 'horses/horse-mint.png', rarity: 'rare' },
+  { id: 'ruby', name: '루비말', image: 'horses/horse-red.png', rarity: 'rare' },
+  { id: 'sapphire', name: '사파이어말', image: 'horses/horse-blue.png', rarity: 'rare' },
+  { id: 'amber', name: '호박말', image: 'horses/horse-gold.png', rarity: 'rare' },
+  { id: 'onyx', name: '오닉스말', image: 'horses/horse-rock.png', rarity: 'rare' },
+  { id: 'silver', name: '은빛말', image: 'horses/horse-silver.png', rarity: 'uncommon' },
+  { id: 'dawn', name: '새벽말', image: 'horses/horse-dawn.png', rarity: 'uncommon' },
+  { id: 'mint', name: '민트말', image: 'horses/horse-mint.png', rarity: 'uncommon' },
+  { id: 'blue', name: '푸른말', image: 'horses/horse-blue.png', rarity: 'uncommon' },
+  { id: 'rose', name: '장미말', image: 'horses/horse-red.png', rarity: 'uncommon' },
+  { id: 'lime', name: '라임말', image: 'horses/horse-forest.png', rarity: 'uncommon' },
+  { id: 'teal', name: '틸말', image: 'horses/horse-mint.png', rarity: 'uncommon' },
+  { id: 'indigo', name: '인디고말', image: 'horses/horse-night.png', rarity: 'uncommon' },
+  { id: 'violet', name: '바이올렛말', image: 'horses/horse-ghost.png', rarity: 'uncommon' },
+  { id: 'cyan', name: '시안말', image: 'horses/horse-ice.png', rarity: 'uncommon' },
+  { id: 'olive', name: '올리브말', image: 'horses/horse-forest.png', rarity: 'uncommon' },
+  { id: 'peach', name: '피치말', image: 'horses/horse-dawn.png', rarity: 'uncommon' },
+  { id: 'cream', name: '크림말', image: 'horses/horse-silver.png', rarity: 'uncommon' },
+  { id: 'lilac', name: '라일락말', image: 'horses/horse-ghost.png', rarity: 'uncommon' },
+  { id: 'copper', name: '구리말', image: 'horses/horse-choco.png', rarity: 'uncommon' },
+  { id: 'bronze', name: '청동말', image: 'horses/horse-choco.png', rarity: 'uncommon' },
+  { id: 'slate', name: '슬레이트말', image: 'horses/horse-rock.png', rarity: 'uncommon' },
+  { id: 'denim', name: '데님말', image: 'horses/horse-blue.png', rarity: 'uncommon' },
+  { id: 'aqua', name: '아쿠아말', image: 'horses/horse-ice.png', rarity: 'uncommon' },
+  { id: 'honey', name: '허니말', image: 'horses/horse-gold.png', rarity: 'uncommon' },
+  { id: 'berry', name: '베리말', image: 'horses/horse-red.png', rarity: 'uncommon' },
+  { id: 'ivory', name: '아이보리말', image: 'horses/horse-silver.png', rarity: 'uncommon' },
+  { id: 'sky', name: '하늘말', image: 'horses/horse-cloud.png', rarity: 'uncommon' },
+  { id: 'pearl', name: '진주말', image: 'horses/horse-silver.png', rarity: 'uncommon' },
   { id: 'red', name: '붉은말', image: 'horses/horse-red.png', rarity: 'common' },
-  { id: 'blue', name: '푸른말', image: 'horses/horse-blue.png', rarity: 'common' },
   { id: 'giant', name: '거대말', image: 'horses/horse-giant.png', rarity: 'common' },
   { id: 'mini', name: '미니말', image: 'horses/horse-mini.png', rarity: 'common' },
-  { id: 'gold', name: '황금말', image: 'horses/horse-gold.png', rarity: 'common' },
-  { id: 'silver', name: '은빛말', image: 'horses/horse-silver.png', rarity: 'common' },
-  { id: 'night', name: '밤하늘말', image: 'horses/horse-night.png', rarity: 'common' },
-  { id: 'dawn', name: '새벽말', image: 'horses/horse-dawn.png', rarity: 'common' },
-  { id: 'flame', name: '불꽃말', image: 'horses/horse-flame.png', rarity: 'common' },
-  { id: 'ice', name: '얼음말', image: 'horses/horse-ice.png', rarity: 'common' },
-  { id: 'forest', name: '숲말', image: 'horses/horse-forest.png', rarity: 'uncommon' },
-  { id: 'thunder', name: '번개말', image: 'horses/horse-thunder.png', rarity: 'uncommon' },
-  { id: 'cloud', name: '구름말', image: 'horses/horse-cloud.png', rarity: 'uncommon' },
-  { id: 'rock', name: '바위말', image: 'horses/horse-rock.png', rarity: 'uncommon' },
-  { id: 'ghost', name: '유령말', image: 'horses/horse-ghost.png', rarity: 'uncommon' },
-  { id: 'robot', name: '로봇말', image: 'horses/horse-robot.png', rarity: 'rare' },
-  { id: 'rainbow', name: '무지개말', image: 'horses/horse-rainbow.png', rarity: 'rare' },
-  { id: 'choco', name: '초코말', image: 'horses/horse-choco.png', rarity: 'rare' },
-  { id: 'mint', name: '민트말', image: 'horses/horse-mint.png', rarity: 'epic' },
-  { id: 'star', name: '별말', image: 'horses/horse-star.png', rarity: 'legendary' },
+  { id: 'forest', name: '숲말', image: 'horses/horse-forest.png', rarity: 'common' },
+  { id: 'choco', name: '초코말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'brown', name: '갈색말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'black', name: '검은말', image: 'horses/horse-night.png', rarity: 'common' },
+  { id: 'white', name: '하얀말', image: 'horses/horse-silver.png', rarity: 'common' },
+  { id: 'gray', name: '회색말', image: 'horses/horse-rock.png', rarity: 'common' },
+  { id: 'orange', name: '주황말', image: 'horses/horse-flame.png', rarity: 'common' },
+  { id: 'yellow', name: '노랑말', image: 'horses/horse-gold.png', rarity: 'common' },
+  { id: 'green', name: '초록말', image: 'horses/horse-forest.png', rarity: 'common' },
+  { id: 'purple', name: '보라말', image: 'horses/horse-ghost.png', rarity: 'common' },
+  { id: 'pink', name: '분홍말', image: 'horses/horse-dawn.png', rarity: 'common' },
+  { id: 'navy', name: '남색말', image: 'horses/horse-night.png', rarity: 'common' },
+  { id: 'maroon', name: '자주말', image: 'horses/horse-red.png', rarity: 'common' },
+  { id: 'khaki', name: '카키말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'tan', name: '탄말', image: 'horses/horse-giant.png', rarity: 'common' },
+  { id: 'clay', name: '점토말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'mocha', name: '모카말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'caramel', name: '캐러멜말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'coffee', name: '커피말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'smoke', name: '연기말', image: 'horses/horse-rock.png', rarity: 'common' },
+  { id: 'stone', name: '스톤말', image: 'horses/horse-rock.png', rarity: 'common' },
+  { id: 'leaf', name: '리프말', image: 'horses/horse-forest.png', rarity: 'common' },
+  { id: 'moss', name: '이끼말', image: 'horses/horse-forest.png', rarity: 'common' },
+  { id: 'sea', name: '바다말', image: 'horses/horse-blue.png', rarity: 'common' },
+  { id: 'river', name: '강물말', image: 'horses/horse-blue.png', rarity: 'common' },
+  { id: 'meadow', name: '초원말', image: 'horses/horse-forest.png', rarity: 'common' },
+  { id: 'earth', name: '대지말', image: 'horses/horse-giant.png', rarity: 'common' },
+  { id: 'wood', name: '나무말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'cocoa', name: '코코아말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'ash', name: '애쉬말', image: 'horses/horse-rock.png', rarity: 'common' },
+  { id: 'latte', name: '라떼말', image: 'horses/horse-choco.png', rarity: 'common' },
+  { id: 'graphite', name: '흑연말', image: 'horses/horse-rock.png', rarity: 'common' },
+  { id: 'walnut', name: '호두말', image: 'horses/horse-choco.png', rarity: 'common' },
 ];
-
-const baseCountByRarity = BASE_HORSES.reduce<Record<HorseRarity, number>>(
-  (acc, horse) => {
-    acc[horse.rarity] += 1;
-    return acc;
-  },
-  {
-    common: 0,
-    uncommon: 0,
-    rare: 0,
-    epic: 0,
-    legendary: 0,
-    mythic: 0,
-    celestial: 0,
-  },
-);
-
-const EXTRA_HORSES: Horse[] = (Object.entries(RARITY_WEIGHTS) as Array<[HorseRarity, number]>).flatMap(
-  ([rarity, total]) =>
-    Array.from({ length: Math.max(0, total - baseCountByRarity[rarity]) }, (_, i) => {
-      const imageKey = IMAGE_KEYS[(baseCountByRarity[rarity] + i) % IMAGE_KEYS.length];
-      const number = baseCountByRarity[rarity] + i + 1;
-      return {
-        id: `${rarity}-extra-${number}`,
-        name: `${RARITY_LABELS[rarity]} 포니 #${number}`,
-        image: `horses/horse-${imageKey}.png`,
-        rarity,
-      };
-    }),
-);
-
-export const HORSES: Horse[] = [...BASE_HORSES, ...EXTRA_HORSES];
 
 export const HORSES_BY_RARITY: Record<HorseRarity, Horse[]> = {
   common: HORSES.filter((horse) => horse.rarity === 'common'),
