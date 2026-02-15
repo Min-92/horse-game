@@ -1,0 +1,105 @@
+.container {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 { margin-bottom: 4px; }
+.sub { color: #64748b; margin-top: 0; }
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.tabs button {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tabs button.active {
+  background: #111827;
+  color: #fff;
+}
+
+.panel {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  background: #fff;
+}
+
+.draw-btn {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 0;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.result-card {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  background: #f8fbff;
+}
+
+.result-card img {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 10px;
+}
+
+.history {
+  padding-left: 18px;
+}
+.history li {
+  margin: 6px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.history span {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.horse-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 8px;
+  text-align: center;
+}
+.horse-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+.horse-card.locked img {
+  filter: grayscale(1) brightness(0.6);
+}
+.horse-card strong {
+  display: block;
+  margin-top: 8px;
+}
+
+.reset-btn {
+  margin-top: 12px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
