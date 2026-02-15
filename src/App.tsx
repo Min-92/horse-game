@@ -1,31 +1,11 @@
 import { useMemo, useState } from 'react';
 import './App.css';
-import { HORSES, type HorseRarity } from './data/horses';
+import { HORSES, HORSES_BY_RARITY, RARITY_LABELS, RARITY_WEIGHTS, type HorseRarity } from './data/horses';
 import { loadHistory, loadOwnedIds, saveHistory, saveOwnedIds, type DrawHistory } from './lib/storage';
 
 type Tab = 'home' | 'draw' | 'collection';
 type CollectionFilter = 'all' | 'owned' | 'locked';
 type RarityFilter = 'all' | HorseRarity;
-
-const RARITY_LABELS: Record<HorseRarity, string> = {
-  common: '일반',
-  uncommon: '고급',
-  rare: '희귀',
-  epic: '영웅',
-  legendary: '전설',
-  mythic: '신화',
-  celestial: '천상',
-};
-
-const RARITY_WEIGHTS: Array<{ rarity: HorseRarity; weight: number }> = [
-  { rarity: 'common', weight: 36 },
-  { rarity: 'uncommon', weight: 24 },
-  { rarity: 'rare', weight: 17 },
-  { rarity: 'epic', weight: 11 },
-  { rarity: 'legendary', weight: 7 },
-  { rarity: 'mythic', weight: 4 },
-  { rarity: 'celestial', weight: 1 },
-];
 
 function App() {
   const [tab, setTab] = useState<Tab>('home');
@@ -55,16 +35,18 @@ function App() {
 
   const pickRarity = (): HorseRarity => {
     let point = Math.random() * 100;
-    for (const { rarity, weight } of RARITY_WEIGHTS) {
+
+    for (const [rarity, weight] of Object.entries(RARITY_WEIGHTS) as Array<[HorseRarity, number]>) {
       if (point < weight) return rarity;
       point -= weight;
     }
+
     return 'common';
   };
 
   const drawHorse = () => {
     const pickedRarity = pickRarity();
-    const pool = HORSES.filter((horse) => horse.rarity === pickedRarity);
+    const pool = HORSES_BY_RARITY[pickedRarity];
     const picked = pool[Math.floor(Math.random() * pool.length)] ?? HORSES[0];
     setLastDrawnId(picked.id);
 

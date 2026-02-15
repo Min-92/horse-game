@@ -7,6 +7,26 @@ export type Horse = {
   rarity: HorseRarity;
 };
 
+export const RARITY_WEIGHTS: Record<HorseRarity, number> = {
+  common: 36,
+  uncommon: 24,
+  rare: 17,
+  epic: 11,
+  legendary: 7,
+  mythic: 4,
+  celestial: 1,
+};
+
+export const RARITY_LABELS: Record<HorseRarity, string> = {
+  common: '일반',
+  uncommon: '고급',
+  rare: '희귀',
+  epic: '영웅',
+  legendary: '전설',
+  mythic: '신화',
+  celestial: '천상',
+};
+
 const IMAGE_KEYS = [
   'red',
   'blue',
@@ -29,26 +49,6 @@ const IMAGE_KEYS = [
   'mint',
   'star',
 ] as const;
-
-const RARITY_COUNTS: Record<HorseRarity, number> = {
-  common: 36,
-  uncommon: 24,
-  rare: 17,
-  epic: 11,
-  legendary: 7,
-  mythic: 4,
-  celestial: 1,
-};
-
-const RARITY_LABELS: Record<HorseRarity, string> = {
-  common: '일반',
-  uncommon: '고급',
-  rare: '희귀',
-  epic: '영웅',
-  legendary: '전설',
-  mythic: '신화',
-  celestial: '천상',
-};
 
 const BASE_HORSES: Horse[] = [
   { id: 'red', name: '붉은말', image: 'horses/horse-red.png', rarity: 'common' },
@@ -89,7 +89,7 @@ const baseCountByRarity = BASE_HORSES.reduce<Record<HorseRarity, number>>(
   },
 );
 
-const EXTRA_HORSES: Horse[] = (Object.entries(RARITY_COUNTS) as Array<[HorseRarity, number]>).flatMap(
+const EXTRA_HORSES: Horse[] = (Object.entries(RARITY_WEIGHTS) as Array<[HorseRarity, number]>).flatMap(
   ([rarity, total]) =>
     Array.from({ length: Math.max(0, total - baseCountByRarity[rarity]) }, (_, i) => {
       const imageKey = IMAGE_KEYS[(baseCountByRarity[rarity] + i) % IMAGE_KEYS.length];
@@ -104,3 +104,13 @@ const EXTRA_HORSES: Horse[] = (Object.entries(RARITY_COUNTS) as Array<[HorseRari
 );
 
 export const HORSES: Horse[] = [...BASE_HORSES, ...EXTRA_HORSES];
+
+export const HORSES_BY_RARITY: Record<HorseRarity, Horse[]> = {
+  common: HORSES.filter((horse) => horse.rarity === 'common'),
+  uncommon: HORSES.filter((horse) => horse.rarity === 'uncommon'),
+  rare: HORSES.filter((horse) => horse.rarity === 'rare'),
+  epic: HORSES.filter((horse) => horse.rarity === 'epic'),
+  legendary: HORSES.filter((horse) => horse.rarity === 'legendary'),
+  mythic: HORSES.filter((horse) => horse.rarity === 'mythic'),
+  celestial: HORSES.filter((horse) => horse.rarity === 'celestial'),
+};
