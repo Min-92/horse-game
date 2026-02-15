@@ -1,14 +1,36 @@
 import { useMemo, useState } from 'react';
 import './App.css';
-import { HORSES } from './data/horses';
+import { HORSES, type HorseRarity } from './data/horses';
 import { loadHistory, loadOwnedIds, saveHistory, saveOwnedIds, type DrawHistory } from './lib/storage';
 
 type Tab = 'home' | 'draw' | 'collection';
 type CollectionFilter = 'all' | 'owned' | 'locked';
+type RarityFilter = 'all' | HorseRarity;
+
+const RARITY_LABELS: Record<HorseRarity, string> = {
+  common: '일반',
+  uncommon: '고급',
+  rare: '희귀',
+  epic: '영웅',
+  legendary: '전설',
+  mythic: '신화',
+  celestial: '천상',
+};
+
+const RARITY_WEIGHTS: Array<{ rarity: HorseRarity; weight: number }> = [
+  { rarity: 'common', weight: 36 },
+  { rarity: 'uncommon', weight: 24 },
+  { rarity: 'rare', weight: 17 },
+  { rarity: 'epic', weight: 11 },
+  { rarity: 'legendary', weight: 7 },
+  { rarity: 'mythic', weight: 4 },
+  { rarity: 'celestial', weight: 1 },
+];
 
 function App() {
   const [tab, setTab] = useState<Tab>('home');
   const [filter, setFilter] = useState<CollectionFilter>('all');
+  const [rarityFilter, setRarityFilter] = useState<RarityFilter>('all');
   const [ownedIds, setOwnedIds] = useState<string[]>(() => loadOwnedIds());
   const [history, setHistory] = useState<DrawHistory[]>(() => loadHistory());
   const [lastDrawnId, setLastDrawnId] = useState<string | null>(null);
@@ -22,13 +44,28 @@ function App() {
   );
 
   const filteredHorses = useMemo(() => {
-    if (filter === 'owned') return HORSES.filter((h) => ownedIds.includes(h.id));
-    if (filter === 'locked') return HORSES.filter((h) => !ownedIds.includes(h.id));
-    return HORSES;
-  }, [filter, ownedIds]);
+    let list = HORSES;
+
+    if (filter === 'owned') list = list.filter((h) => ownedIds.includes(h.id));
+    if (filter === 'locked') list = list.filter((h) => !ownedIds.includes(h.id));
+    if (rarityFilter !== 'all') list = list.filter((h) => h.rarity === rarityFilter);
+
+    return list;
+  }, [filter, ownedIds, rarityFilter]);
+
+  const pickRarity = (): HorseRarity => {
+    let point = Math.random() * 100;
+    for (const { rarity, weight } of RARITY_WEIGHTS) {
+      if (point < weight) return rarity;
+      point -= weight;
+    }
+    return 'common';
+  };
 
   const drawHorse = () => {
-    const picked = HORSES[Math.floor(Math.random() * HORSES.length)];
+    const pickedRarity = pickRarity();
+    const pool = HORSES.filter((horse) => horse.rarity === pickedRarity);
+    const picked = pool[Math.floor(Math.random() * pool.length)] ?? HORSES[0];
     setLastDrawnId(picked.id);
 
     const isNew = !ownedIds.includes(picked.id);
@@ -59,7 +96,7 @@ function App() {
     <main className="mobile-app">
       <header className="top-header">
         <h1>🐴 말 뽑기 도감</h1>
-        <p>픽셀 포니 20종을 모아보세요</p>
+        <p>픽셀 포니 100종을 모아보세요</p>
       </header>
 
       {tab === 'home' && (
@@ -100,6 +137,7 @@ function App() {
               <>
                 <img src={lastDrawnHorse.image} alt={lastDrawnHorse.name} />
                 <h2>{lastDrawnHorse.name}</h2>
+                <p className="hint">등급: {RARITY_LABELS[lastDrawnHorse.rarity]}</p>
                 <p className={`badge ${lastWasNew ? 'new' : 'dup'}`}>
                   {lastWasNew ? '신규 획득!' : '중복 획득'}
                 </p>
@@ -166,6 +204,18 @@ function App() {
             </button>
           </div>
 
+          <label className="card" style={{ display: 'grid', gap: 8 }}>
+            <strong>등급 필터</strong>
+            <select value={rarityFilter} onChange={(e) => setRarityFilter(e.target.value as RarityFilter)}>
+              <option value="all">전체 등급</option>
+              {Object.entries(RARITY_LABELS).map(([key, label]) => (
+                <option key={key} value={key}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <section className="collection-grid">
             {filteredHorses.map((horse) => {
               const owned = ownedIds.includes(horse.id);
@@ -173,6 +223,7 @@ function App() {
                 <article key={horse.id} className={`horse-card ${owned ? 'owned' : 'locked'}`}>
                   <img src={horse.image} alt={horse.name} />
                   <strong>{owned ? horse.name : '?????'}</strong>
+                  <small>{RARITY_LABELS[horse.rarity]}</small>
                 </article>
               );
             })}
