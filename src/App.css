@@ -1,105 +1,228 @@
-.container {
-  max-width: 940px;
+.mobile-app {
+  max-width: 420px;
   margin: 0 auto;
-  padding: 20px;
+  min-height: 100vh;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 16px 16px 88px;
 }
 
-h1 { margin-bottom: 4px; }
-.sub { color: #64748b; margin-top: 0; }
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin: 16px 0;
+.top-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
-.tabs button {
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.tabs button.active {
-  background: #111827;
-  color: #fff;
+.top-header p {
+  margin: 6px 0 0;
+  color: #94a3b8;
+  font-size: 0.92rem;
 }
 
-.panel {
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 16px;
-  background: #fff;
-}
-
-.draw-btn {
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 12px 18px;
-  border-radius: 12px;
-  border: 0;
-  background: #2563eb;
-  color: #fff;
-  cursor: pointer;
-}
-
-.result-card {
-  margin-top: 16px;
-  padding: 12px;
-  border: 1px solid #dbeafe;
-  border-radius: 12px;
-  background: #f8fbff;
-}
-
-.result-card img {
-  width: 100%;
-  max-width: 360px;
-  border-radius: 10px;
-}
-
-.history {
-  padding-left: 18px;
-}
-.history li {
-  margin: 6px 0;
-  display: flex;
-  justify-content: space-between;
+.screen {
+  margin-top: 14px;
+  display: grid;
   gap: 12px;
 }
-.history span {
-  color: #64748b;
+
+.card {
+  border: 1px solid #1f2937;
+  border-radius: 14px;
+  background: #111827;
+  padding: 12px;
+}
+
+.hero-card {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-card img,
+.result-card img {
+  width: 100%;
+  border-radius: 10px;
+  background: #0b1220;
+}
+
+.hero-card h2,
+.result-card h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.hero-card p,
+.hint {
+  margin: 6px 0 0;
+  color: #9ca3af;
   font-size: 0.9rem;
 }
 
-.grid {
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: #1f2937;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #f59e0b);
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 14px;
+  font-weight: 700;
+}
+
+.primary-btn {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.secondary-btn {
+  background: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+
+.danger-btn {
+  background: #7f1d1d;
+  color: #fee2e2;
+}
+
+.result-card {
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.badge.new {
+  background: #14532d;
+  color: #bbf7d0;
+}
+
+.badge.dup {
+  background: #3f3f46;
+  color: #e4e4e7;
+}
+
+.history-card h3 {
+  margin: 0 0 8px;
+}
+
+.history-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
+  gap: 7px;
+}
+
+.history-card li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.92rem;
+}
+
+.history-card li time {
+  color: #94a3b8;
+}
+
+.empty {
+  color: #94a3b8;
+}
+
+.filter-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.filter-tabs button {
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #111827;
+  color: #cbd5e1;
+}
+
+.filter-tabs button.active {
+  background: #f59e0b;
+  color: #111827;
+  border-color: transparent;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .horse-card {
-  border: 1px solid #e2e8f0;
+  border: 1px solid #1f2937;
+  background: #0b1220;
   border-radius: 12px;
   padding: 8px;
   text-align: center;
 }
+
 .horse-card img {
   width: 100%;
   border-radius: 8px;
 }
-.horse-card.locked img {
-  filter: grayscale(1) brightness(0.6);
-}
+
 .horse-card strong {
   display: block;
-  margin-top: 8px;
+  margin-top: 6px;
+  font-size: 0.82rem;
 }
 
-.reset-btn {
-  margin-top: 12px;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
+.horse-card.locked img {
+  filter: grayscale(1) brightness(0.5);
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(420px, 100%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 10px 16px 14px;
+  background: rgba(2, 6, 23, 0.95);
+  border-top: 1px solid #1f2937;
+}
+
+.bottom-nav button {
+  padding: 10px;
   border-radius: 10px;
-  padding: 8px 12px;
-  cursor: pointer;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
+.bottom-nav button.active {
+  background: #f59e0b;
+  color: #111827;
+  border-color: transparent;
 }
